@@ -2,11 +2,11 @@
     display: grid;
     grid-template-columns: 25% 25% 30% 20%;
     }
-   .main {
+.main {
     display: grid;
     grid-template-columns: 20% 80%;
     }
-   .product {
+.product {
     display: grid;
     grid-template-columns: 1fr 1fr;
     }
@@ -15,13 +15,12 @@ img{
     height: 100px;
     border-radius: 50%
 }
-app-product{
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    
-}
 .test{
 position: absolute;
-bottom : -10px
+
 }
+.tests{
+    position: absolute;
+    right : 50px;
+    }
+
