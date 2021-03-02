@@ -11,6 +11,7 @@ export class AppComponent {
   title = 'CapitalistClient';
   world: World = new World();
   server: string;
+  p:Product = new Product();
   constructor(private service: RestserviceService) {
     this.server = service.getServer();
     service.getWorld().then(
@@ -18,6 +19,9 @@ export class AppComponent {
     this.world = world;
     });
     }
-   
+   onProductionDone(p : Product){
+      this.world.money=this.world.money + p.revenu;
+      console.log(this.world.money);
+    }
   
 }
