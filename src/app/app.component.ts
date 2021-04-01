@@ -12,8 +12,6 @@ export class AppComponent {
   world: World = new World();
   server: string;
   p:Product = new Product();
-  //qtmulti = ["x1", "x10", "x100", "max"]; //J'ai ajouté ça 
-  qtmulti : string =""; //test Bon ça marche comme ça mais je trouve ça bizarre de dire nul part que qtmulit ça peut prendre les valeurs 1 10 100 et max 
   constructor(private service: RestserviceService) {
     this.server = service.getServer();
     service.getWorld().then(
@@ -25,10 +23,5 @@ export class AppComponent {
       this.world.money=this.world.money + p.revenu;
       console.log(this.world.money);
     }
-
-    multiplicateur(){
-
-    }
-
   
 }
