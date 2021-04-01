@@ -12,17 +12,37 @@ export class ProductComponent implements OnInit {
   progressbarvalue: number = 0;
   timeleft: number = 0;
   lastupdate: number = 0;
+  quantitemax = 0;
   _qtmulti : string="" //J'ai ajouté ça je l'ai juste déplacé là parce que ça marchait pas à l'endroit où ça devait marcher XD #bidouille 
   world: World = new World(); // Alors je sais pas si j'ai le droit de faire ça mais je voulais import le world pour récupérer le money dans _qmultim
   n : number = 0; 
   i : number = 0; // pour faire tourner la boucle for du calcMaxCanBuy
   s : number = 0; // pour faire la somme des pourcentages de croissance pour la boucle for 
-  mult : number = qtmulti; 
+  _money: number = 0;
+  cout_total_achat: number=0;
+  //mult : number = this.qtmulti; 
   @Input()
   set prod(value: Product) {
     this.product = value;
-
+    
   }
+  @Input()
+set money(value: number) {
+  this._money = value;
+  //console.log(this._money);
+  if (this._money && this.product) this.calcMaxCanBuy();
+}
+
+//_qtmulti : string;        //Je pense faut l'initialiser avant j'ai test mais pas réussis obviously 
+ @Input()
+ set qtmulti(value: string) {
+ this._qtmulti = value;
+ if (this._qtmulti && this.product) this.calcMaxCanBuy();
+ }
+ /*set qtmultim(value: string) {      // Et la il a dit de faire de la même manière donc j'ai test avec l'initialisation du world au dessus
+  this._qtmulti = value;
+  if (this._qtmulti && this.product) this.world.money;
+ }*/
   @Output() notifyProduction: EventEmitter<Product> = new
     EventEmitter<Product>();
 
@@ -57,28 +77,38 @@ export class ProductComponent implements OnInit {
   }
 }
 
-calcMaxCanBuy(){
-  //x : number = this.product.cout ; 
-  //c = this.product.croissance; 
-  for  this.i=0, qmulti, i++; { // La j'ai un pb de i alors que pour s ça marche 
-    s = this.s + this.product.croissance^qmulti;
-  }
-  if this.world.money - (this.product.cout*this.s)> 0) ; {   // Alors la je sais que ça marche pas parce que qtmulti c'est un string mais du coup on peut le mettre sous forme int ? 
-      //Alors bouton cliquable 
-  }
-  
+achat() {
+  console.log("achat: "+this.product.name);
+  switch (this._qtmulti) {
+    case "X1":
+      this.cout_total_achat = this.product.cout;
+      this.product.cout = this.product.croissance * this.product.cout;
+      console.log("le cout"+this.product.cout);
+      this.product.quantite += 1;
+      console.log(this._money);
+      break;
+    case "X10":
+      this.cout_total_achat = this.product.cout *((1 - (this.product.croissance ** 10))/(1  - this.product.croissance));
+      this.product.cout = (this.product.croissance ** 10) * this.product.cout;
+      this.product.quantite += 10;
+      break;
+    case "X100":
+      this.cout_total_achat = this.product.cout *((1 - (Math.pow(this.product.croissance,100)) )/(1  - this.product.croissance));
+      this.product.cout = (this.product.croissance ** 100) * this.product.cout;
+      this.product.quantite += 100;
+      break;
+    case "XMAX":
+      this.cout_total_achat = this.product.cout *((1 - Math.pow(this.product.croissance,this.quantitemax))/(1  - this.product.croissance));
+      this.product.cout = (this.product.croissance ** this.quantitemax) * this.product.cout;
+      this.product.quantite += this.quantitemax;
+      break;
+  }}
+
+calcMaxCanBuy(): number {
+  this.n = Math.trunc(Math.log(1 - (this.money * (1 - this.product.croissance) / this.product.cout)) / Math.log(this.product.croissance));
+  return this.n;
 }
 
-//_qtmulti : string;        //Je pense faut l'initialiser avant j'ai test mais pas réussis obviously 
- @Input()
- set qtmulti(value: string) {
- this._qtmulti = value;
- if (this._qtmulti && this.product) this.calcMaxCanBuy();
- }
- set qtmultim(value: string) {      // Et la il a dit de faire de la même manière donc j'ai test avec l'initialisation du world au dessus
-  this._qtmulti = value;
-  if (this._qtmulti && this.product) this.world.money;
- }
 
 
 

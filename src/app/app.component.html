@@ -2,8 +2,8 @@
   <div><img [attr.src]="server+world.logo" /></div>
   <div> argent <span [innerHTML]="world.money | bigvalue"> </span></div>
   <div> ID du joueur </div>
-  <div> <fois [qtmulti]="qtmulti" (click)="multiplicateur()"></fois> <!--J'ai test d'ajouter ça comme pour la progresse barre J'ai voulu faire que le click ça aille sur une fonction multiplicateur mais vu qu'il en parle pas je sais pas quoi mettre à la place-->
-</div>          <!-- et aussi je sais pas quoi mettre comme balise, j'ai voulu en créer une mais il me dit qu'elle est pas affiliée à qmulti  -->
+  <div> multiplicateur : <button class="bouton" (click)="achatmultiple()">{{qtmulti}}</button> </div>
+</div><!-- et aussi je sais pas quoi mettre comme balise, j'ai voulu en créer une mais il me dit qu'elle est pas affiliée à qmulti  -->
 <div class="main">
   <div> liste des boutons de menu </div>
   <div class="product">
