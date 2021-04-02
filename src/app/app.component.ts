@@ -10,7 +10,7 @@ import { World, Product, Pallier } from './world';
 export class AppComponent {
   title = 'CapitalistClient';
   world: World = new World();
-  server: string;
+  server: string='';
   p:Product = new Product();
   qtmulti : string ="X1"; //test Bon ça marche comme ça mais je trouve ça bizarre de dire nul part que qtmulit ça peut prendre les valeurs 1 10 100 et max 
   constructor(private service: RestserviceService) {
@@ -21,13 +21,14 @@ export class AppComponent {
     });
     }
    onProductionDone(p : Product){
-      this.world.money=this.world.money + p.revenu;
-      console.log(this.world.money);
+      this.world.money=this.world.money + p.quantite*p.revenu;
+      this.world.score = this.world.score + p.quantite*p.revenu;
+    }
+    onPurchaseDone(cout_total_achat: number){
+      this.world.money =  this.world.money - cout_total_achat;
+      this.world.score = this.world.score - cout_total_achat;
     }
 
-    multiplicateur(){
-
-    }
     achatmultiple(){
 
       switch(this.qtmulti){
