@@ -84,32 +84,35 @@ export class ProductComponent implements OnInit {
 }
 
 achat() {
-  
+  console.log("achat: "+this.product.name);
   switch (this._qtmulti) {
     case "X1":
-      this.cout_total_achat = this.product.cout ;
-      this.product.cout = this.product.cout* this.product.croissance;
-      if(this.world.money>this.cout_total_achat){
-      this.product.quantite += 1;}
+      this.cout_total_achat = this.product.cout;
+      this.product.cout = this.product.croissance * this.product.cout;
+      
+      this.product.quantite += 1;
+      
       break;
     case "X10":
-      this.cout_total_achat = this.product.cout *((1 - (Math.pow(this.product.croissance,(this.product.quantite + 11)))/(1  - this.product.croissance)));
-      if(this.world.money>this.cout_total_achat){
-      this.product.quantite += 10;}
+      this.cout_total_achat = this.product.cout *((1 - (this.product.croissance ** 10))/(1  - this.product.croissance));
+      this.product.cout = (this.product.croissance ** 10) * this.product.cout;
+      this.product.quantite += 10;
       break;
     case "X100":
-      this.cout_total_achat = this.product.cout *((1 - (Math.pow(this.product.croissance,(this.product.quantite + 101))) )/(1  - this.product.croissance));
-      if(this.world.money>this.cout_total_achat){
-      this.product.quantite += 100;}
+      this.cout_total_achat = this.product.cout *((1 - (Math.pow(this.product.croissance,100)) )/(1  - this.product.croissance));
+      this.product.cout = (this.product.croissance ** 100) * this.product.cout;
+      this.product.quantite += 100;
       break;
     case "XMAX":
-      this.cout_total_achat = this.product.cout *((1 - Math.pow(this.product.croissance,(this.product.quantite + this.quantitemax +1)) )/(1  - this.product.croissance));
-      if(this.world.money>this.cout_total_achat){
-      this.product.quantite += this.quantitemax;}
+      this.cout_total_achat = this.product.cout *((1 - Math.pow(this.product.croissance,this.quantitemax))/(1  - this.product.croissance));
+      this.product.cout = (this.product.croissance ** this.quantitemax) * this.product.cout;
+      this.product.quantite += this.quantitemax;
       break;
   }
   this.prix_actuel = this.cout_total_achat;
+  
 this.notifyPurchase.emit(this.cout_total_achat);
+
 }
 
 calcMaxCanBuy(){
