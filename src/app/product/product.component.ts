@@ -20,7 +20,7 @@ export class ProductComponent implements OnInit {
   s : number = 0; // pour faire la somme des pourcentages de croissance pour la boucle for 
   _money: number = 0;
   prix_actuel = 0;
-  cout_total_achat: number=0;
+  cout_total: number=0;
   //mult : number = this.qtmulti; 
   @Input()
   set prod(value: Product) {
@@ -84,34 +84,36 @@ export class ProductComponent implements OnInit {
 }
 
 achat() {
-  console.log("achat: "+this.product.name);
   switch (this._qtmulti) {
     case "X1":
-      this.cout_total_achat = this.product.cout;
+      this.cout_total = this.product.cout;
       this.product.cout = this.product.croissance * this.product.cout;
       
       this.product.quantite += 1;
-      
+      this.prix_actuel = this.cout_total;
       break;
     case "X10":
-      this.cout_total_achat = this.product.cout *((1 - (this.product.croissance ** 10))/(1  - this.product.croissance));
+      this.cout_total = this.product.cout *((1 - (this.product.croissance ** 10))/(1  - this.product.croissance));
       this.product.cout = (this.product.croissance ** 10) * this.product.cout;
       this.product.quantite += 10;
+      this.prix_actuel = this.cout_total;
       break;
     case "X100":
-      this.cout_total_achat = this.product.cout *((1 - (Math.pow(this.product.croissance,100)) )/(1  - this.product.croissance));
+      this.cout_total = this.product.cout *((1 - (Math.pow(this.product.croissance,100)) )/(1  - this.product.croissance));
       this.product.cout = (this.product.croissance ** 100) * this.product.cout;
       this.product.quantite += 100;
+      this.prix_actuel = this.cout_total;
       break;
     case "XMAX":
-      this.cout_total_achat = this.product.cout *((1 - Math.pow(this.product.croissance,this.quantitemax))/(1  - this.product.croissance));
+      this.cout_total = this.product.cout *((1 - Math.pow(this.product.croissance,this.quantitemax))/(1  - this.product.croissance));
       this.product.cout = (this.product.croissance ** this.quantitemax) * this.product.cout;
       this.product.quantite += this.quantitemax;
+      this.prix_actuel = this.cout_total;
       break;
   }
-  this.prix_actuel = this.cout_total_achat;
+  this.prix_actuel = this.cout_total;
   
-this.notifyPurchase.emit(this.cout_total_achat);
+this.notifyPurchase.emit(this.cout_total);
 
 }
 
@@ -124,9 +126,4 @@ calcMaxCanBuy(){
   }
 }
 
-
-
-
-
 }
-
