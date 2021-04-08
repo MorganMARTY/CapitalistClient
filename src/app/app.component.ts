@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, QueryList, ViewChildren } from '@angular/core';
+import { ProductComponent } from './product/product.component';
 import { RestserviceService } from './restservice.service';
 import { World, Product, Pallier } from './world';
 
@@ -8,6 +9,8 @@ import { World, Product, Pallier } from './world';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  @ViewChildren(ProductComponent)
+  public produits!: QueryList<ProductComponent>;
   title = 'CapitalistClient';
   world: World = new World();
   server: string='';
@@ -29,20 +32,32 @@ export class AppComponent {
       this.world.score = this.world.score - cout_total_achat;
     }
 
-    achatmultiple(){
+    achatm(){
 
       switch(this.qtmulti){
           case "X1":
             this.qtmulti="X10";
+            for (let produit of this.produits) {
+              produit.calculPrix(this.qtmulti);
+            }
             break;
           case "X10":
             this.qtmulti="X100";
+            for (let produit of this.produits) {
+              produit.calculPrix(this.qtmulti);
+            }
             break;
           case "X100":
             this.qtmulti="XMAX";
+            for (let produit of this.produits) {
+              produit.calculPrix(this.qtmulti);
+            }
             break;
           case  "XMAX":
             this.qtmulti="X1";
+            for (let produit of this.produits) {
+              produit.calculPrix(this.qtmulti);
+            }
             break;
       }
     }

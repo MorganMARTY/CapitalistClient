@@ -1,9 +1,9 @@
 <div class="header">
   <div><img [attr.src]="server+world.logo" /></div>
   <div> argent <span [innerHTML]="world.money | bigvalue"> </span></div>
-  <div> ID du joueur </div>
-  <div> multiplicateur : <button class="bouton" (click)="achatmultiple()">{{qtmulti}}</button> </div>
-</div><!-- et aussi je sais pas quoi mettre comme balise, j'ai voulu en créer une mais il me dit qu'elle est pas affiliée à qmulti  -->
+  <div> ID du joueur : </div>
+  <div> multiplicateur : <button class="bouton" (click)="achatm()">{{qtmulti}}</button> </div>
+</div>
 <div class="main">
   <div> liste des boutons de menu </div>
   <div class="product">
