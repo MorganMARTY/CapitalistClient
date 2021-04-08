@@ -15,9 +15,14 @@ export class AppComponent {
   world: World = new World();
   server: string='';
   p:Product = new Product();
-  qtmulti : string ="X1"; //test Bon ça marche comme ça mais je trouve ça bizarre de dire nul part que qtmulit ça peut prendre les valeurs 1 10 100 et max 
+  qtmulti : string ="X1";
+  username: string | null; //test Bon ça marche comme ça mais je trouve ça bizarre de dire nul part que qtmulit ça peut prendre les valeurs 1 10 100 et max 
   constructor(private service: RestserviceService) {
     this.server = service.getServer();
+    this.username = localStorage.getItem("username");
+    if (this.username == null) {
+      this.username = 'Sorcier' + Math.floor(Math.random() * 10000)
+    }
     service.getWorld().then(
     world => {
     this.world = world;
@@ -31,7 +36,12 @@ export class AppComponent {
       this.world.money =  this.world.money - cout_total_achat;
       this.world.score = this.world.score - cout_total_achat;
     }
-
+    onUsernameChanged() {
+      if (this.username != null) {
+        localStorage.setItem("username", this.username);     
+      }
+    }
+  
     achatm(){
 
       switch(this.qtmulti){

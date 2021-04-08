@@ -1,7 +1,8 @@
 <div class="header">
   <div><img [attr.src]="server+world.logo" /></div>
   <div> argent <span [innerHTML]="world.money | bigvalue"> </span></div>
-  <div> ID du joueur : </div>
+  <div> ID du joueur : <input type="text" [(ngModel)]="username" change="onUsernameChanged()"/>
+  </div>
   <div> multiplicateur : <button class="bouton" (click)="achatm()">{{qtmulti}}</button> </div>
 </div>
 <div class="main">
