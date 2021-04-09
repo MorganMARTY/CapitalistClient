@@ -2,12 +2,15 @@ import { Component, QueryList, ViewChildren } from '@angular/core';
 import { ProductComponent } from './product/product.component';
 import { RestserviceService } from './restservice.service';
 import { World, Product, Pallier } from './world';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
+
 export class AppComponent {
   @ViewChildren(ProductComponent)
   public produits!: QueryList<ProductComponent>;
@@ -16,13 +19,21 @@ export class AppComponent {
   server: string='';
   p:Product = new Product();
   qtmulti : string ="X1";
-  username: string | null; //test Bon ça marche comme ça mais je trouve ça bizarre de dire nul part que qtmulit ça peut prendre les valeurs 1 10 100 et max 
-  constructor(private service: RestserviceService) {
+  username: string | null; 
+  showManagers = false;
+  pallier : Pallier = new Pallier();
+  manager : string = ''; 
+  MatSnackBar : any;
+
+  
+  constructor(private service: RestserviceService,) {
     this.server = service.getServer();
     this.username = localStorage.getItem("username");
     if (this.username == null) {
       this.username = 'Sorcier' + Math.floor(Math.random() * 10000)
     }
+
+      
     service.getWorld().then(
     world => {
     this.world = world;
@@ -71,5 +82,19 @@ export class AppComponent {
             break;
       }
     }
-  
+
+
+
+    fshowManagers(){
+      this.showManagers = true;
+    }
+    hireManager(manager : Pallier){
+      if (this.world.money >= manager.seuil && this.world.products.product[manager.idcible-1].quantite>0){
+        this.world.money = this.world.money - manager.seuil;
+        manager.unlocked = true;
+        this.world.products.product[manager.idcible-1].managerUnlocked = true;
+        }
+
+    }
+ 
 }

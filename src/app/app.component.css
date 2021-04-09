@@ -25,8 +25,32 @@ position: absolute;
     position: absolute;
     right : 50px;
     }
-.fois{
-    position: absolute;
 
+.milieu{
+    position: absolute;
+    left:45%; 
+    border-bottom: 5px;
 }
+
+.droite{
+    position: absolute;
+    left:70%; 
+}
+.flotte{
+    float: left; 
+    align-items: center;
+}
+
+.modal {
+ position: fixed; /* reste en place */
+ z-index: 2; /* au dessus du reste */
+ width: 800px; /* largeur */
+ height: 800px; /* hauteur */
+ overflow: auto; /* barre de scroll si besoin */
+ background-color: white; /* opaque */
+ border: solid;
+ top:10; /* a 10% du haut */
+ left:20%; /* a 20% de la gauche */
+}
+
 
