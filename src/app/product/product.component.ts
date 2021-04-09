@@ -67,40 +67,20 @@ export class ProductComponent implements OnInit {
 
   }
   calcScore() {
-    if (this.product.managerUnlocked == false) {
-      if (this.product.timeleft != 0) {
-
-        this.product.timeleft = this.product.vitesse - (Date.now() - this.lastupdate);
-        //this.lastupdate=Date.now();
-
-        if (this.product.timeleft <= 0) {
-          this.product.timeleft = 0;
-          this.progressbarvalue = 0;
-          // on prévient le composant parent que ce produit a généré son revenu.
-          this.notifyProduction.emit(this.product);
-
-        } else {
-          this.progressbarvalue = ((this.product.vitesse - this.product.timeleft) / this.product.vitesse) * 100;
-        }
-      }
-    }
-    else if(this.product.timeleft == 0){
+    if(this.product.managerUnlocked && this.product.timeleft==0){
       this.startFabrication();
-    
-      /*this.product.timeleft = -1; //Vu qu'il faut que dans tous les cas ça démarre pourquoi pas le faire recommencer à 0 à chaque fois chiant mais simple 
-      if (this.product.timeleft != 0) {
-
-        this.product.timeleft = this.product.vitesse - (Date.now() - this.lastupdate);
-        //this.lastupdate=Date.now();
-
-        if (this.product.timeleft <= 0) {
-          this.product.timeleft = -1; //J'ai mis -1 juste pour que ça soit différente de zéro parce que je savais pas trop quoi mettre 
-          this.notifyProduction.emit(this.product);
-
-        } else {
-          this.progressbarvalue = ((this.product.vitesse - this.product.timeleft) / this.product.vitesse) * 100;
-        }*/
-      
+    }
+    if (this.product.timeleft != 0) {
+      this.product.timeleft = this.product.vitesse - (Date.now() - this.lastupdate);
+      if (this.product.timeleft <= 0) {
+          this.product.timeleft = 0;
+        this.progressbarvalue = 0;
+        this.notifyProduction.emit(this.product);
+        
+      }
+      else if (this.product.timeleft > 0) {
+        this.progressbarvalue = ((this.product.vitesse - this.product.timeleft) / this.product.vitesse) * 100;
+      }
     }
   }
   calculPrix(qtmulti: string) {
