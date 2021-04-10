@@ -18,7 +18,7 @@ export class AppComponent {
   server: string = '';
   p: Product = new Product();
   qtmulti: string = "X1";
-  username: string | null;
+  username="";
   showManagers = false;
   pallier: Pallier = new Pallier();
   manager: string = '';
@@ -28,12 +28,8 @@ export class AppComponent {
 
   constructor(private service: RestserviceService, private snackBar: MatSnackBar) {
     this.server = service.getServer();
-    this.username = localStorage.getItem("username");
-    if (this.username == null) {
-      this.username = 'Sorcier' + Math.floor(Math.random() * 10000)
-    }      
-
-
+    this.username = localStorage.getItem("username") || 'Sorcier' + Math.floor(Math.random() * 10000);
+    this.service.user=this.username;
     service.getWorld().then(
       world => {
         this.world = world;
@@ -42,15 +38,15 @@ export class AppComponent {
   onProductionDone(p: Product) {
     this.world.money = this.world.money + p.quantite * p.revenu;
     this.world.score = this.world.score + p.quantite * p.revenu;
+    this.service.putProduct(p);
   }
   onPurchaseDone(cout_total_achat: number) {
     this.world.money = this.world.money - cout_total_achat;
     this.world.score = this.world.score - cout_total_achat;
   }
   onUsernameChanged() {
-    if (this.username != null) {
-      localStorage.setItem("username", this.username);
-    }
+    localStorage.setItem("username", this.username);
+    this.service.user = this.username;
   }
 
   achatm() {
@@ -95,6 +91,7 @@ export class AppComponent {
         manager.unlocked = true;
         this.world.products.product[manager.idcible - 1].managerUnlocked = true;
         this.popMessage("Félicitation, vous avez engagé un nouveau manager")
+        this.service.putManager(manager);
       }
     }
 

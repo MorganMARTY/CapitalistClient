@@ -22,11 +22,20 @@ export class ProductComponent implements OnInit {
   prix_actuel = 0;
   prix = 4;
   cout_total: number = 0;
+  progressbar: any;
   //mult : number = this.qtmulti; 
   @Input()
   set prod(value: Product) {
     this.product = value;
     this.prix_actuel = this.product.cout;
+    if (this.product && this.product.timeleft > 0) {
+      this.lastupdate = Date.now();
+      let progress = (this.product.vitesse - this.product.timeleft) /
+        this.product.vitesse;
+      this.progressbar.set(progress);
+      this.progressbar.animate(1, { duration: this.product.timeleft });
+    }
+
 
   }
   @Input()
@@ -67,16 +76,16 @@ export class ProductComponent implements OnInit {
 
   }
   calcScore() {
-    if(this.product.managerUnlocked && this.product.timeleft==0){
+    if (this.product.managerUnlocked && this.product.timeleft == 0) {
       this.startFabrication();
     }
     if (this.product.timeleft != 0) {
       this.product.timeleft = this.product.vitesse - (Date.now() - this.lastupdate);
       if (this.product.timeleft <= 0) {
-          this.product.timeleft = 0;
+        this.product.timeleft = 0;
         this.progressbarvalue = 0;
         this.notifyProduction.emit(this.product);
-        
+
       }
       else if (this.product.timeleft > 0) {
         this.progressbarvalue = ((this.product.vitesse - this.product.timeleft) / this.product.vitesse) * 100;
