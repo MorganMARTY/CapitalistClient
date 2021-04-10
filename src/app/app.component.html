@@ -8,30 +8,32 @@
 
 <div class="main">
   <div> liste des boutons de menu
-    <div> Managers : <button class="bouton" (click)="showManagers = !showManagers">Managers</button>
+    <div> Managers : <button class="bouton" mat-raised-button color="primary" [matBadge]="badgeManagers"
+        [matBadgeHidden]="badgeManagers==0" (click)="showManagers = !showManagers">Managers</button>
       <div *ngIf="showManagers" class="modal">
         <div>
           <h1 class="title">Managers make you feel better !</h1>
         </div>
-      <!--  <div class="milieu">-->
-          <div *ngFor="let manager of world.managers.pallier">
-            <div *ngIf="manager.unlocked" class="managerslayout">
-              <div>
-                <div class="flotte" class="logo"><img class="round" [attr.src]="server+manager.logo" /> </div>
-              </div>
-              <div class="milieu">
-                <div class="manager.name"> {{manager.name}} </div>
-                <div class="managercible"> {{ world.products.product[manager.idcible-1].name }} </div>
-                <div class="managercost"> {{manager.seuil}} </div>
-              </div>
-              <div class="droite">
-                <button class="hirebutton" (click)="hireManager(manager)" [ngClass]="'world.money >= manager.seuil'">Hire !</button>
-              </div>
+        <!--  <div class="milieu">-->
+        <div *ngFor="let manager of world.managers.pallier">
+          <div *ngIf="!manager.unlocked" class="managerslayout">
+            <div>
+              <div class="flotte" class="logo"><img class="round" [attr.src]="server+manager.logo" /> </div>
+            </div>
+            <div class="milieu">
+              <div class="manager.name"> {{manager.name}} </div>
+              <div class="managercible"> {{ world.products.product[manager.idcible-1].name }} </div>
+              <div class="managercost"> {{manager.seuil}} </div>
+            </div>
+            <div class="droite">
+              <button class="hirebutton" (click)="hireManager(manager)" [ngClass]="'world.money >= manager.seuil'">Hire
+                !</button>
             </div>
           </div>
+        </div>
         <!-- </div>-->
         <button class="closebutton" mat-raised-button color="primary"
-        (click)="showManagers = !showManagers">Close</button>
+          (click)="showManagers = !showManagers">Close</button>
       </div>
     </div>
   </div>
