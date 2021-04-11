@@ -20,7 +20,7 @@ export class ProductComponent implements OnInit {
   prix = 4;
   cout_total: number = 0;
   progressbar: any;
-  quantite : number = 0;
+  quantite : number = 1;
 
   @Input()
   set prod(value: Product) {
@@ -93,6 +93,7 @@ export class ProductComponent implements OnInit {
   calculPrix(qtmulti: string) {
     if (qtmulti == "X1") {
       this.prix = this.product.cout;
+      this.quantite=this.product.quantite;
     }
     else if (qtmulti == "X10") {
       this.prix = this.product.cout * ((1 - (this.product.croissance ** 10)) / (1 - this.product.croissance));

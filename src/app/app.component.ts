@@ -51,6 +51,11 @@ export class AppComponent {
   onUsernameChanged() {
     localStorage.setItem("username", this.username);
     this.service.user = this.username;
+    this.service.getWorld().then(
+    world => {
+      this.world = world;
+      this.badgeUpgrades();
+    });
   }
 
   achatm() {
@@ -94,7 +99,7 @@ export class AppComponent {
         this.world.money = this.world.money - manager.seuil;
         manager.unlocked = true;
         this.world.products.product[manager.idcible - 1].managerUnlocked = true;
-        this.popMessage("Félicitation, vous avez engagé un nouveau manager!")
+        this.popMessage("Félicitation, vous avez engagé un nouveau manager : "+ manager.name)
         this.service.putManager(manager);
       }
     }
@@ -112,15 +117,5 @@ export class AppComponent {
       }
     }
   }
-    /*this.badgeManagers = 0
-    for (let manager of this.world.managers.pallier){
-      if (this.world.products.product[manager.idcible-1].managerUnlocked == false ) {
-        if (this.world.money >= manager.seuil && this.world.products.product[manager.idcible-1].quantite > 0) {
-          this.badgeManagers = this.badgeManagers+1;
-        }
-     }
-    }
-    return this.badgeManagers;
-  }*/
-
+   
 }
