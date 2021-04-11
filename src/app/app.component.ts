@@ -26,6 +26,7 @@ export class AppComponent {
   badgeManagers : number = 0;	
 
 
+
   constructor(private service: RestserviceService, private snackBar: MatSnackBar) {
     this.server = service.getServer();
     this.username = localStorage.getItem("username") || 'Sorcier' + Math.floor(Math.random() * 10000);
@@ -33,12 +34,14 @@ export class AppComponent {
     service.getWorld().then(
       world => {
         this.world = world;
+        this.badgeUpgrades();
       });
   }
   onProductionDone(p: Product) {
     this.world.money = this.world.money + p.quantite * p.revenu;
     this.world.score = this.world.score + p.quantite * p.revenu;
     this.service.putProduct(p);
+    this.badgeUpgrades();
   }
   onPurchaseDone(cout_total_achat: number) {
     this.world.money = this.world.money - cout_total_achat;
@@ -90,7 +93,7 @@ export class AppComponent {
         this.world.money = this.world.money - manager.seuil;
         manager.unlocked = true;
         this.world.products.product[manager.idcible - 1].managerUnlocked = true;
-        this.popMessage("Félicitation, vous avez engagé un nouveau manager")
+        this.popMessage("Félicitation, vous avez engagé un nouveau manager!")
         this.service.putManager(manager);
       }
     }
@@ -100,12 +103,23 @@ export class AppComponent {
     this.snackBar.open(message, "", { duration : 2000 })
     }
 
-  badgeUpgrades(manager: Pallier) {
-    if (this.world.products.product[manager.idcible - 1].managerUnlocked == false ) {
-      if (this.world.money >= manager.seuil && this.world.products.product[manager.idcible - 1].quantite > 0) {
-        this.badgeManagers = 1;
+  badgeUpgrades() {
+    this.badgeManagers = 0;
+    for (let manager of this.world.managers.pallier) {
+      if (manager.seuil <= this.world.money && !manager.unlocked) {
+        this.badgeManagers++;
       }
     }
   }
+    /*this.badgeManagers = 0
+    for (let manager of this.world.managers.pallier){
+      if (this.world.products.product[manager.idcible-1].managerUnlocked == false ) {
+        if (this.world.money >= manager.seuil && this.world.products.product[manager.idcible-1].quantite > 0) {
+          this.badgeManagers = this.badgeManagers+1;
+        }
+     }
+    }
+    return this.badgeManagers;
+  }*/
 
 }

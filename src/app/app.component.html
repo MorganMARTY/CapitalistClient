@@ -16,7 +16,7 @@
         </div>
         <!--  <div class="milieu">-->
         <div *ngFor="let manager of world.managers.pallier">
-          <div *ngIf="manager.unlocked" class="managerslayout">
+          <div *ngIf="!manager.unlocked" class="managerslayout">
             <div>
               <div class="flotte" class="logo"><img class="round" [attr.src]="server+manager.logo" /> </div>
             </div>
@@ -26,8 +26,7 @@
               <div class="managercost"> {{manager.seuil}} </div>
             </div>
             <div class="droite">
-              <button class="hirebutton" (click)="hireManager(manager)" [ngClass]="'world.money >= manager.seuil'">Hire
-                !</button>
+              <button class="hirebutton" (click)="hireManager(manager)" [ngClass]="{'selectable' : (world.money >= manager.seuil)}" >Hire!</button>
             </div>
           </div>
         </div>
