@@ -1,13 +1,27 @@
+
 .header {
     display: grid;
     grid-template-columns: 25% 25% 30% 20%;
-    background-color: darkslateblue;
-    
+    background-color: rgb(53, 79, 151);
+    color : white; 
+    padding-top: 10px;
+    padding-left : 10px; 
+
     }
 .main {
     display: grid;
     grid-template-columns: 20% 80%;
+    padding-left: 10px;
+    padding-bottom: 754px;
+    padding-top : 20px;
+    background-color: rgb(196, 196, 202);
+
     }
+
+.body {
+    display : block;
+    width : 100%;
+    height : 100%;}
 .product {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -23,34 +37,40 @@ position: absolute;
 }
 .tests{
     position: absolute;
-    right : 50px;
+    right : 400px;
     }
 
-.milieu{
-    position: absolute;
-    left:45%; 
-    border-bottom: 5px;
+
+.gauche{
+    margin-left: 150px;
+    margin-bottom : 10px;
+    vertical-align: center;
 }
 
-.droite{
-    position: absolute;
-    left:70%; 
-}
-.flotte{
-    float: left; 
-    align-items: center;
+.title{
+    margin-left: 20px;
 }
 
+.managername{
+    font-style: italic;
+    font-size : 16px;
+}
+.boutons{
+    margin-top: 10px;
+}
 .modal {
  position: fixed; /* reste en place */
  z-index: 2; /* au dessus du reste */
- width: 800px; /* largeur */
- height: 800px; /* hauteur */
+ width: 400px; /* largeur */
+ height: 600px; /* hauteur */
  overflow: auto; /* barre de scroll si besoin */
  background-color: white; /* opaque */
  border: solid;
  top:10; /* a 10% du haut */
- left:20%; /* a 20% de la gauche */
+ left:5%; /* a 20% de la gauche */
+ background-color: rgb(53, 79, 151);
+ color : white; 
 }
+
 
 

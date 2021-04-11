@@ -24,6 +24,7 @@ export class AppComponent {
   manager: string = '';
   MatSnackBar: string ='';
   badgeManagers : number = 0;	
+  hired : number = 0;
 
 
 

@@ -1,13 +1,19 @@
-<div><img [attr.src]="server+product?.logo" (click)="startFabrication()" />
-    <mat-progress-bar class="progressbar" [value]="progressbarvalue"></mat-progress-bar>
-</div>
-<p>{{product.name}}</p>
+    <div>
+        <img [attr.src]="server+product?.logo" (click)="startFabrication()" />
+        <mat-progress-bar class="progressbar" [value]="progressbarvalue"></mat-progress-bar>
+    </div>
+    <div class ="tdroite">
+        <p class="titreProduit">{{product.name}}</p>
+        <p>Prix : {{this.prix|number:"1.0-1"}}</p>
+        <p>Quantité : {{this.quantite|number:"1.0-1"}}</p>
+    </div>
 
-<div [ngSwitch]="_qtmulti">
-    <button class="bouton" *ngSwitchCase="'X1'" [disabled]="quantitemax < 1" (click)="achat()">Acheter 1</button>
-    <button class="bouton" *ngSwitchCase="'X10'" [disabled]="quantitemax < 10" (click)="achat()">Acheter 10</button>
-    <button class="bouton" *ngSwitchCase="'X100'" [disabled]="quantitemax < 100" (click)="achat()">Acheter 100</button>
-    <button class="bouton" *ngSwitchCase="'XMAX'" [disabled]="quantitemax <= 0" (click)="achat()">Acheter {{quantitemax}}</button>
 
-    <p>{{this.prix|number:"1.0-1"}}</p>
-</div>
+    <div [ngSwitch]="_qtmulti" class="switch">
+        <button class="bouton" *ngSwitchCase="'X1'" [disabled]="quantitemax < 1" (click)="achat()">Acheter 1</button>
+        <button class="bouton" *ngSwitchCase="'X10'" [disabled]="quantitemax < 10" (click)="achat()">Acheter 10</button>
+        <button class="bouton" *ngSwitchCase="'X100'" [disabled]="quantitemax < 100" (click)="achat()">Acheter
+            100</button>
+        <button class="bouton" *ngSwitchCase="'XMAX'" [disabled]="quantitemax <= 0"
+            (click)="achat()">Acheter{{quantitemax}}</button>
+    </div>

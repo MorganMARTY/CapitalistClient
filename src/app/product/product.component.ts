@@ -14,16 +14,14 @@ export class ProductComponent implements OnInit {
   lastupdate: number = 0;
   quantitemax = 0;
   _qtmulti: string = ""
-  world: World = new World(); // Alors je sais pas si j'ai le droit de faire ça mais je voulais import le world pour récupérer le money dans _qmultim
-  n: number = 0;
-  i: number = 0; // pour faire tourner la boucle for du calcMaxCanBuy
-  s: number = 0; // pour faire la somme des pourcentages de croissance pour la boucle for 
+  world: World = new World(); 
   _money: number = 0;
   prix_actuel = 0;
   prix = 4;
   cout_total: number = 0;
   progressbar: any;
-  //mult : number = this.qtmulti; 
+  quantite : number = 0;
+
   @Input()
   set prod(value: Product) {
     this.product = value;
@@ -114,24 +112,28 @@ export class ProductComponent implements OnInit {
         this.product.cout = this.product.croissance * this.product.cout;
 
         this.product.quantite += 1;
+        this.quantite += 1;
         this.calculPrix(this._qtmulti);
         break;
       case "X10":
         this.cout_total = this.product.cout * ((1 - (this.product.croissance ** 10)) / (1 - this.product.croissance));
         this.product.cout = (this.product.croissance ** 10) * this.product.cout;
         this.product.quantite += 10;
+        this.quantite += 10;
         this.calculPrix(this._qtmulti);
         break;
       case "X100":
         this.cout_total = this.product.cout * ((1 - (Math.pow(this.product.croissance, 100))) / (1 - this.product.croissance));
         this.product.cout = (this.product.croissance ** 100) * this.product.cout;
         this.product.quantite += 100;
+        this.quantite += 100;
         this.calculPrix(this._qtmulti);
         break;
       case "XMAX":
         this.cout_total = this.product.cout * ((1 - Math.pow(this.product.croissance, this.quantitemax)) / (1 - this.product.croissance));
         this.product.cout = (this.product.croissance ** this.quantitemax) * this.product.cout;
         this.product.quantite += this.quantitemax;
+        this.quantite += this.quantitemax ;
         this.calculPrix(this._qtmulti);
         break;
     }
