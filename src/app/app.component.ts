@@ -46,7 +46,7 @@ export class AppComponent {
   }
   onPurchaseDone(cout_total_achat: number) {
     this.world.money = this.world.money - cout_total_achat;
-    this.world.score = this.world.score - cout_total_achat;
+    
   }
   onUsernameChanged() {
     localStorage.setItem("username", this.username);
@@ -113,7 +113,7 @@ export class AppComponent {
     this.badgeManagers = 0;
     for (let manager of this.world.managers.pallier) {
       if (manager.seuil <= this.world.money && !manager.unlocked) {
-        this.badgeManagers++;
+        this.badgeManagers += 1;
       }
     }
   }
